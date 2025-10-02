@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgugr3b708uqa"]
+
+[ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_xld5c"]
+[ext_resource type="Script" uid="uid://jcr88fs3yb06" path="res://ui/scripts/pause.gd" id="2_k23cl"]
+[ext_resource type="PackedScene" uid="uid://dr5eh7mus7l0e" path="res://ui/scenes/options.tscn" id="3_qgos8"]
+[ext_resource type="FontFile" uid="uid://bua7wgx1t0fr0" path="res://ui/fonts/Direct_Message.ttf" id="3_vwvne"]
+
+[sub_resource type="FontVariation" id="FontVariation_hdirp"]
+base_font = ExtResource("3_vwvne")
+spacing_top = -2
+spacing_bottom = -2
+baseline_offset = 0.15
+
+[node name="Pause" instance=ExtResource("1_xld5c")]
+script = ExtResource("2_k23cl")
+
+[node name="Title" parent="Margin/Content" index="0"]
+size_flags_horizontal = 1
+theme_override_fonts/font = SubResource("FontVariation_hdirp")
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Options" parent="Margin/Content" index="1" instance=ExtResource("3_qgos8")]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="Actions" type="VBoxContainer" parent="Margin/Content" index="2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 2
+
+[node name="Resume" type="Button" parent="Margin/Content/Actions" index="0"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Resume"
+
+[node name="MainMenu" type="Button" parent="Margin/Content/Actions" index="1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Main Menu"
+
+[connection signal="pressed" from="Margin/Content/Actions/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Margin/Content/Actions/MainMenu" to="." method="_on_main_menu_pressed"]

@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=3 uid="uid://dr5eh7mus7l0e"]
+
+[ext_resource type="Script" uid="uid://ds1ak16866ni5" path="res://ui/scripts/options.gd" id="1_lr2b1"]
+[ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="1_nt5qe"]
+[ext_resource type="PackedScene" uid="uid://bgfb21q6py1ju" path="res://ui/scenes/slider_setting.tscn" id="2_l4ffv"]
+
+[node name="Options" type="VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_nt5qe")
+script = ExtResource("1_lr2b1")
+
+[node name="SFX" parent="." instance=ExtResource("2_l4ffv")]
+layout_mode = 2
+
+[node name="Label" parent="SFX" index="0"]
+text = "Sound"
+
+[node name="Slider" parent="SFX" index="1"]
+value = 0.5
+
+[node name="Music" parent="." instance=ExtResource("2_l4ffv")]
+layout_mode = 2
+
+[node name="Label" parent="Music" index="0"]
+text = "Music"
+
+[node name="Slider" parent="Music" index="1"]
+value = 0.5
+
+[connection signal="value_changed" from="SFX/Slider" to="." method="_on_sfx_value_changed"]
+[connection signal="value_changed" from="Music/Slider" to="." method="_on_music_value_changed"]
+
+[editable path="SFX"]
+[editable path="Music"]

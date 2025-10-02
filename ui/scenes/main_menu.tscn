@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdceaenvnjnfy"]
+
+[ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_tfcyl"]
+[ext_resource type="Script" uid="uid://c5rj1cwd0cm8a" path="res://ui/scripts/main_menu.gd" id="2_pvlg3"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menu" parent="CanvasLayer" instance=ExtResource("1_tfcyl")]
+script = ExtResource("2_pvlg3")
+
+[node name="Title" parent="CanvasLayer/Menu/Margin/Content" index="0"]
+text = "Ludum Dare 58"
+
+[node name="Actions" type="VBoxContainer" parent="CanvasLayer/Menu/Margin/Content" index="1"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+
+[node name="Play" type="Button" parent="CanvasLayer/Menu/Margin/Content/Actions"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"
+
+[connection signal="pressed" from="CanvasLayer/Menu/Margin/Content/Actions/Play" to="CanvasLayer/Menu" method="_on_play_pressed"]
+
+[editable path="CanvasLayer/Menu"]

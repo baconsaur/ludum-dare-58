@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://7p7axhmtbebh"]
+
+[ext_resource type="Script" uid="uid://ccma78pb25x27" path="res://scripts/scene_manager.gd" id="1_we8k5"]
+[ext_resource type="PackedScene" uid="uid://cdceaenvnjnfy" path="res://ui/scenes/main_menu.tscn" id="2_b81s6"]
+[ext_resource type="PackedScene" uid="uid://5bs3j6op03mu" path="res://scenes/game.tscn" id="3_h7lqg"]
+
+[node name="SceneManager" type="CanvasLayer"]
+process_mode = 3
+layer = 2
+script = ExtResource("1_we8k5")
+scene_map = Dictionary[String, PackedScene]({
+"main_menu": ExtResource("2_b81s6"),
+"start_game": ExtResource("3_h7lqg")
+})
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

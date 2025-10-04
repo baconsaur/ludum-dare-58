@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cyclcira4yt1e"]
+[gd_scene load_steps=4 format=3 uid="uid://cyclcira4yt1e"]
 
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="1_b0j75"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_b0j75"]
+friction = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0j75"]
 size = Vector2(118, 122)
 
 [node name="Terrain" type="StaticBody2D"]
+collision_layer = 3
+physics_material_override = SubResource("PhysicsMaterial_b0j75")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_b0j75")

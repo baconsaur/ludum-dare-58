@@ -4,13 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_8g0i4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nub35"]
-size = Vector2(12, 12)
+size = Vector2(16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8g0i4"]
 radius = 24.63
 
 [node name="Fish" type="CharacterBody2D" groups=["catchable", "fish"]]
 modulate = Color(1, 0.25, 0.25, 1)
+collision_layer = 3
+motion_mode = 1
 script = ExtResource("1_n6yr6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["catchable", "fish"]]

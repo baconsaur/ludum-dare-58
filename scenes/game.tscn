@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dcw6qoq4hayql" path="res://scenes/item.tscn" id="6_p57ef"]
 
 [node name="Main" type="Node2D"]
-position = Vector2(15, 11)
 
 [node name="Player" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(156, 34)
@@ -40,3 +39,10 @@ position = Vector2(211, 349)
 
 [node name="Item3" parent="." instance=ExtResource("6_p57ef")]
 position = Vector2(233, 354)
+
+[node name="Fish2" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(211, 229)
+
+[node name="Fish3" parent="." instance=ExtResource("4_lbhrr")]
+position = Vector2(77, 204)
+scale = Vector2(1.0011723, 0.962963)

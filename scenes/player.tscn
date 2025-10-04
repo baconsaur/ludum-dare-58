@@ -14,12 +14,15 @@ script = ExtResource("1_3vyb7")
 
 [node name="Hook" type="CharacterBody2D" parent="."]
 collision_mask = 2
+motion_mode = 1
 floor_stop_on_slope = false
+floor_max_angle = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook"]
 shape = SubResource("RectangleShape2D_3vyb7")
 
 [node name="HookSprite" type="Sprite2D" parent="Hook"]
+z_index = 1
 scale = Vector2(0.07812499, 0.078125)
 texture = ExtResource("2_g2els")
 
@@ -39,6 +42,11 @@ position = Vector2(0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/CatchRadius"]
 shape = SubResource("CircleShape2D_g2els")
+
+[node name="Line" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.8884254, 0.88842535, 0.88842535, 1)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -20.000015)

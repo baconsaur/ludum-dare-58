@@ -15,7 +15,6 @@ func drop():
 	freeze = false
 
 func _on_body_entered(body: Node) -> void:
-	print_debug(body.name)
 	if body.name != "Hook":
 		return
 	var player: Node2D = body.get_parent()

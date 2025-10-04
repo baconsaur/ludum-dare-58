@@ -28,7 +28,9 @@ func move(_delta):
 		x_direction = 1
 
 	velocity.x = x_direction * idle_speed
-	move_and_slide()
+	var collided = move_and_slide()
+	if collided:
+		x_direction *= -1
 
 func alert():
 	if state != State.IDLE:

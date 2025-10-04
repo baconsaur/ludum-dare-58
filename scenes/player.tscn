@@ -1,22 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=5 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
+size = Vector2(10, 10)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
+radius = 7.0
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_3vyb7")
 
 [node name="Hook" type="CharacterBody2D" parent="."]
+collision_mask = 2
+floor_stop_on_slope = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook"]
 shape = SubResource("RectangleShape2D_3vyb7")
 
-[node name="Sprite2D" type="Sprite2D" parent="Hook"]
-scale = Vector2(0.15625, 0.15625)
+[node name="HookSprite" type="Sprite2D" parent="Hook"]
+scale = Vector2(0.07812499, 0.078125)
 texture = ExtResource("2_g2els")
 
 [node name="Camera2D" type="Camera2D" parent="Hook"]
 position_smoothing_enabled = true
+drag_horizontal_enabled = true
 drag_vertical_enabled = true
+drag_left_margin = 0.0
+drag_top_margin = 0.0
+drag_right_margin = 0.0
+drag_bottom_margin = 0.0
+
+[node name="Catches" type="Node2D" parent="Hook"]
+position = Vector2(0, 10)
+
+[node name="CatchRadius" type="Area2D" parent="Hook"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/CatchRadius"]
+shape = SubResource("CircleShape2D_g2els")
+
+[node name="PlayerSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -20.000015)
+scale = Vector2(0.15625, 0.15625001)
+texture = ExtResource("2_g2els")
+
+[node name="Collection" type="Node2D" parent="."]
+position = Vector2(39, -12)

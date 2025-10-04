@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ludum Dare 58"
-run/main_scene="uid://cdceaenvnjnfy"
+run/main_scene="uid://5bs3j6op03mu"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/use_filter=false
 boot_splash/image="uid://bwegy3b4frmw1"
@@ -23,10 +23,10 @@ SceneManager="*res://scenes/scene_manager.tscn"
 
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
-window/size/window_width_override=1920
-window/size/window_height_override=1080
+window/size/viewport_width=180
+window/size/viewport_height=320
+window/size/window_width_override=1080
+window/size/window_height_override=1920
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 window/stretch/scale=2.0

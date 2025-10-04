@@ -1,4 +1,7 @@
 extends Node2D
+
+signal energy_change
+
 enum State {
 	IDLE,
 	DESCENDING,
@@ -27,6 +30,9 @@ var fish_on_hook: bool = false
 func _ready() -> void:
 	hook.position = hook_origin
 	camera.position.y = camera_offset
+	
+	energy = 100
+	emit_signal("energy_change", energy)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("action"):
@@ -85,6 +91,8 @@ func spend_energy(delta):
 		return
 
 	energy -= delta
+	emit_signal("energy_change", energy)
+	
 	if energy <= 0 and state == State.DESCENDING:
 		set_state(State.ASCENDING)
 
@@ -105,7 +113,7 @@ func reel():
 func shake():
 	if state != State.ASCENDING:
 		return
-	print("AAAA")
+	# TODO
 	spend_energy(shake_cost)
 
 func catch():

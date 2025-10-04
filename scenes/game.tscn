@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=9 format=3 uid="uid://5bs3j6op03mu"]
 
+[ext_resource type="Script" uid="uid://comuclmxm6gu7" path="res://scripts/game_controller.gd" id="1_u5sy4"]
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dgugr3b708uqa" path="res://ui/scenes/pause.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c544vis4otiqx" path="res://scenes/player.tscn" id="3_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://bi5m3408m8yxi" path="res://scenes/fish.tscn" id="4_lbhrr"]
+[ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="5_gee14"]
 [ext_resource type="PackedScene" uid="uid://cyclcira4yt1e" path="res://scenes/terrain.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://dcw6qoq4hayql" path="res://scenes/item.tscn" id="6_p57ef"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_u5sy4")
 
 [node name="Player" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(156, 34)
@@ -15,6 +18,21 @@ position = Vector2(156, 34)
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("1_uwrxv")
 pause_scene = ExtResource("2_yqjtg")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_gee14")
+
+[node name="EnergyBar" type="ProgressBar" parent="HUD/MarginContainer"]
+modulate = Color(1, 1, 1, 0.7764706)
+layout_mode = 2
+value = 100.0
+rounded = true
+show_percentage = false
 
 [node name="Fish" parent="." instance=ExtResource("4_lbhrr")]
 position = Vector2(157, 132)

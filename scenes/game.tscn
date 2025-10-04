@@ -1,10 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=5 format=3 uid="uid://5bs3j6op03mu"]
 
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dgugr3b708uqa" path="res://ui/scenes/pause.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://c544vis4otiqx" path="res://scenes/player.tscn" id="3_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="4_lbhrr"]
 
 [node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(156, 34)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("1_uwrxv")
 pause_scene = ExtResource("2_yqjtg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(53, -47)
+texture = ExtResource("4_lbhrr")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(258, 117)
+texture = ExtResource("4_lbhrr")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(31, 273)
+texture = ExtResource("4_lbhrr")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(257, 446)
+texture = ExtResource("4_lbhrr")

@@ -20,10 +20,22 @@ tracks/0/path = NodePath("Hook/Catches:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.041666508, 0.083333194, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.4166667, 0.4583333, 0.5, 0.5416667, 0.5776199, 0.6192866, 0.6609532, 0.7083333, 0.74428654, 0.7859533, 0.8276199, 0.8692866, 0.9109532, 0.9526199, 1.0000042),
+"times": PackedFloat32Array(0, 0.041666687, 0.08333349, 0.12500016, 0.16666682, 0.20833349, 0.25000015, 0.29166684, 0.3333335, 0.37500018, 0.4166668, 0.4583335, 0.5000002, 0.5359534, 0.5776201, 0.6192867, 0.6666668, 0.70262, 0.7442868, 0.7859534, 0.8276201, 0.8692867, 0.9109534, 0.95833766),
 "transitions": PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
 "update": 0,
 "values": [Vector2(0, 10), Vector2(-1, 9), Vector2(1, 10), Vector2(-2, 10), Vector2(1, 10), Vector2(0, 9), Vector2(2, 9), Vector2(-1, 10), Vector2(-3, 10), Vector2(-1, 9), Vector2(2, 10), Vector2(-1, 9), Vector2(1, 9), Vector2(-2, 10), Vector2(1, 11), Vector2(-3, 10), Vector2(0, 10), Vector2(1, 9), Vector2(-2, 10), Vector2(0, 9), Vector2(2, 9), Vector2(-2, 10), Vector2(1, 10), Vector2(0, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hook/HookSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(-0.041666668, 0, 0.041666687, 0.08333349, 0.12500016, 0.16666682, 0.20833349, 0.25000015, 0.29166684, 0.3333335, 0.37500018, 0.4166668, 0.4583335, 0.5000002, 0.5359534, 0.5776201, 0.6192867, 0.6666668, 0.70262, 0.7442868, 0.7859534, 0.8276201, 0.8692867, 0.9109534, 0.95833766),
+"transitions": PackedFloat32Array(1, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 0), Vector2(-2, 0), Vector2(1, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-1, 0), Vector2(-3, 0), Vector2(-1, -1), Vector2(2, 0), Vector2(-1, -1), Vector2(1, -1), Vector2(-2, 0), Vector2(1, 1), Vector2(-3, 0), Vector2(0, 0), Vector2(1, -1), Vector2(-2, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-2, 0), Vector2(1, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_qhqgy"]
@@ -39,6 +51,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 10)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hook/HookSprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
@@ -100,4 +124,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_dqkch")
 }
 
+[connection signal="child_order_changed" from="Hook/Catches" to="." method="_on_catches_child_order_changed"]
 [connection signal="body_entered" from="Hook/CatchRadius" to="." method="_on_catch_radius_body_entered"]

@@ -33,8 +33,11 @@ func drop():
 	original_parent.add_child(self)
 	global_position = global_position + drop_offset
 
-	hooked = false
 	emit_signal("dropped")
 	
 	await get_tree().create_timer(1.0).timeout
 	freeze = false
+	hooked = false
+
+func remove():
+	queue_free() # TODO make it do an animation or something first

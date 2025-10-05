@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcw6qoq4hayql"]
+[gd_scene load_steps=5 format=3 uid="uid://dcw6qoq4hayql"]
 
 [ext_resource type="Script" uid="uid://cew2l5rqdqybj" path="res://scripts/item.gd" id="1_s8enn"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_6muww"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s8enn"]
+friction = 10.0
+rough = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nub35"]
 size = Vector2(10, 10)
@@ -9,8 +13,10 @@ size = Vector2(10, 10)
 [node name="Item" type="RigidBody2D" groups=["catchable"]]
 modulate = Color(0.525, 1, 0.25, 1)
 collision_layer = 2
-collision_mask = 3
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_s8enn")
 gravity_scale = 0.2
+inertia = 1.0
 lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10

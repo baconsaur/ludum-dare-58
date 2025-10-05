@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://oebmwspom6mx"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://oebmwspom6mx"]
 
 [ext_resource type="FontFile" uid="uid://bua7wgx1t0fr0" path="res://ui/fonts/Direct_Message.ttf" id="1_jlqpw"]
 [ext_resource type="Texture2D" uid="uid://dh7r567c3m2oi" path="res://ui/sprites/grabber.png" id="1_rom6p"]
@@ -114,6 +114,19 @@ anti_aliasing = false
 base_font = ExtResource("1_jlqpw")
 baseline_offset = 0.15
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xv3vb"]
+bg_color = Color(0.12, 0.12, 0.12, 0.7764706)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.1, 0.8745098)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+anti_aliasing = false
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s4sxt"]
 border_width_left = 1
 border_width_top = 1
@@ -165,12 +178,13 @@ HSlider/icons/grabber_highlight = ExtResource("2_5r0yv")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_rom6p")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_rom6p")
 HSlider/styles/slider = SubResource("StyleBoxFlat_o7luq")
-Label/font_sizes/font_size = 10
+Label/font_sizes/font_size = 5
 Label/fonts/font = SubResource("FontVariation_0ie0l")
 MarginContainer/constants/margin_bottom = 4
 MarginContainer/constants/margin_left = 4
 MarginContainer/constants/margin_right = 4
 MarginContainer/constants/margin_top = 4
+Panel/styles/panel = SubResource("StyleBoxFlat_xv3vb")
 ProgressBar/font_sizes/font_size = 5
 ProgressBar/styles/background = SubResource("StyleBoxFlat_s4sxt")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_3te4m")

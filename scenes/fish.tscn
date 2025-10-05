@@ -3,11 +3,12 @@
 [ext_resource type="Script" uid="uid://cvru4e4ocmvvv" path="res://scripts/fish_controller.gd" id="1_n6yr6"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_8g0i4"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nub35"]
-size = Vector2(16, 16)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8g0i4"]
+radius = 4.0
+height = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8g0i4"]
-radius = 40.012497
+radius = 28.0
 
 [node name="Fish" type="CharacterBody2D" groups=["catchable", "fish"]]
 modulate = Color(1, 0.25, 0.25, 1)
@@ -15,10 +16,10 @@ collision_layer = 3
 script = ExtResource("1_n6yr6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["catchable", "fish"]]
-shape = SubResource("RectangleShape2D_nub35")
+shape = SubResource("CapsuleShape2D_8g0i4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.15625, 0.15625)
+scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_8g0i4")
 
 [node name="DetectionZone" type="Area2D" parent="."]

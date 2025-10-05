@@ -1,7 +1,10 @@
-[gd_scene format=3 uid="uid://bxkiuute3xtog"]
+[gd_scene load_steps=2 format=3 uid="uid://bxkiuute3xtog"]
+
+[ext_resource type="Script" uid="uid://b4scjkawnde0" path="res://ui/scripts/modal.gd" id="1_dpjoo"]
 
 [node name="Body" type="VBoxContainer"]
 size_flags_vertical = 3
+script = ExtResource("1_dpjoo")
 
 [node name="Text" type="RichTextLabel" parent="."]
 layout_mode = 2

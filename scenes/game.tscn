@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=11 format=3 uid="uid://5bs3j6op03mu"]
 
 [ext_resource type="Script" uid="uid://comuclmxm6gu7" path="res://scripts/game_controller.gd" id="1_u5sy4"]
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cyclcira4yt1e" path="res://scenes/terrain.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://kuk7qphqfskm" path="res://ui/scenes/game_over.tscn" id="6_0tnpc"]
 [ext_resource type="PackedScene" uid="uid://dcw6qoq4hayql" path="res://scenes/item.tscn" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://bfqpgl37gw4yb" path="res://ui/scenes/level_end.tscn" id="7_vtaks"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u5sy4")
@@ -36,6 +37,9 @@ rounded = true
 show_percentage = false
 
 [node name="GameOver" parent="HUD" instance=ExtResource("6_0tnpc")]
+visible = false
+
+[node name="LevelEnd" parent="HUD" instance=ExtResource("7_vtaks")]
 visible = false
 
 [node name="Fish" parent="." instance=ExtResource("4_lbhrr")]

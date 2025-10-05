@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal dropped
+signal touched_item
 
 enum State {
 	IDLE,
@@ -21,10 +22,12 @@ var origin: Vector2 = Vector2.ZERO
 var x_direction: int = 1
 var target: Node2D
 var stamina: int = max_stamina
+var can_catch: bool = true
 
 @onready var parent: Node2D = get_parent()
 @onready var body_collider: CollisionShape2D = $CollisionShape2D
 @onready var detect_collider: CollisionShape2D = $DetectionZone/CollisionShape2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	origin = position
@@ -67,6 +70,7 @@ func alert():
 	if state != State.IDLE or not target:
 		return
 	
+	animation_player.play("alert")
 	var timer = Timer.new()
 	timer.connect("timeout", func(): timer.queue_free(); if state == State.ALERT: set_state(State.IDLE))
 	timer.wait_time = max_alert_time
@@ -77,6 +81,7 @@ func alert():
 
 func hook(catch_zone):
 	velocity = Vector2.ZERO
+	can_catch = false
 	
 	body_collider.set_deferred("disabled", true)
 	detect_collider.set_deferred("disabled", true)
@@ -86,6 +91,7 @@ func hook(catch_zone):
 	global_position.x = catch_zone.global_position.x
 	if state not in [State.IDLE, State.ALERT]:
 		return
+	
 	set_state(State.HOOKED)
 
 func shake():
@@ -96,6 +102,8 @@ func shake():
 func drop():
 	if state != State.HOOKED:
 		return
+	
+	animation_player.stop()
 	
 	target = null
 	stamina = max_stamina
@@ -111,6 +119,7 @@ func drop():
 	await get_tree().create_timer(1.0).timeout
 	body_collider.set_deferred("disabled", false)
 	detect_collider.set_deferred("disabled", false)
+	can_catch = true
 
 func attack():
 	pass
@@ -123,6 +132,7 @@ func set_state(new_state):
 	state = new_state
 
 func _on_detection_range_entered(body: Node2D) -> void:
+	print_debug(body.name)
 	if body.name != "Hook":
 		return
 	target = body

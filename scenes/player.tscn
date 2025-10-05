@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=9 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_g2els"]
+[ext_resource type="Script" uid="uid://dbmojvl1l3qyn" path="res://scripts/collection.gd" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
 size = Vector2(6, 6)
@@ -75,6 +76,7 @@ _data = {
 script = ExtResource("1_3vyb7")
 
 [node name="Hook" type="CharacterBody2D" parent="."]
+collision_layer = 4
 collision_mask = 2
 motion_mode = 1
 floor_stop_on_slope = false
@@ -116,13 +118,16 @@ position = Vector2(0, -20.000015)
 scale = Vector2(0.15625, 0.15625001)
 texture = ExtResource("2_g2els")
 
-[node name="Collection" type="Node2D" parent="."]
-position = Vector2(39, -12)
+[node name="Collection" type="Node2D" parent="PlayerSprite"]
+position = Vector2(100, 25.6)
+scale = Vector2(6.4, 6.399999)
+script = ExtResource("3_qhqgy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_dqkch")
 }
 
-[connection signal="child_order_changed" from="Hook/Catches" to="." method="_on_catches_child_order_changed"]
+[connection signal="child_order_changed" from="Hook/Catches" to="." method="_on_catches_child_order_changed" flags=3]
 [connection signal="body_entered" from="Hook/CatchRadius" to="." method="_on_catch_radius_body_entered"]
+[connection signal="child_order_changed" from="PlayerSprite/Collection" to="PlayerSprite/Collection" method="_on_child_order_changed" flags=3]

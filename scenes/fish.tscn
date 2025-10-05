@@ -7,12 +7,11 @@
 size = Vector2(16, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8g0i4"]
-radius = 24.63
+radius = 40.012497
 
 [node name="Fish" type="CharacterBody2D" groups=["catchable", "fish"]]
 modulate = Color(1, 0.25, 0.25, 1)
 collision_layer = 3
-motion_mode = 1
 script = ExtResource("1_n6yr6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["catchable", "fish"]]
@@ -22,9 +21,10 @@ shape = SubResource("RectangleShape2D_nub35")
 scale = Vector2(0.15625, 0.15625)
 texture = ExtResource("2_8g0i4")
 
-[node name="detection_range" type="Area2D" parent="."]
+[node name="DetectionZone" type="Area2D" parent="."]
+collision_mask = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_range"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone"]
 shape = SubResource("CircleShape2D_8g0i4")
 
-[connection signal="body_entered" from="detection_range" to="." method="_on_detection_range_entered"]
+[connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_range_entered"]

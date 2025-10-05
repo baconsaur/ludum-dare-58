@@ -10,7 +10,7 @@ enum State {
 }
 
 @export var ascend_speed: Vector2 = Vector2(40.0, -30.0)
-@export var descend_speed: Vector2 = Vector2(30.0, 25.0)
+@export var descend_speed: Vector2 = Vector2(35.0, 30.0)
 @export var hook_origin: Vector2 = Vector2.ZERO
 @export var camera_offset: int = 40
 @export var max_depth: int = 200
@@ -26,6 +26,7 @@ var fish_on_hook: bool = false
 @onready var collection = $Collection
 @onready var camera = $Hook/Camera2D
 @onready var line: Line2D = $Line
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	hook.position = hook_origin
@@ -37,6 +38,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("action"):
 		take_action()
+		return
+	
+	if fish_on_hook:
+		return
+
+	if Input.is_action_just_pressed("up") and state == State.DESCENDING:
+		reel()
+	if Input.is_action_just_pressed("down") and state == State.ASCENDING:
+		hook.velocity = Vector2.ZERO
+		camera.position.y = -camera_offset
+		set_state(State.DESCENDING)
 
 func _physics_process(delta: float) -> void:
 	move_hook(delta)
@@ -46,12 +58,8 @@ func take_action():
 		return
 	elif state == State.IDLE:
 		cast()
-	elif state == State.DESCENDING:
-		reel()
 	elif fish_on_hook:
 		shake()
-	elif state == State.ASCENDING:
-		set_state(State.DESCENDING)
 
 func cast():
 	if state != State.IDLE or energy <= 0:
@@ -62,9 +70,17 @@ func move_hook(delta):
 	if state not in [State.DESCENDING, State.ASCENDING]:
 		return
   
+	var y_direction = Input.get_axis("up", "down")
 	var speed = descend_speed
 	if state == State.ASCENDING:
-		speed = ascend_speed
+		if fish_on_hook:
+			speed = ascend_speed / 2
+		elif y_direction < 0:
+			speed = ascend_speed + (ascend_speed * abs(y_direction) * 2)
+		else:
+			speed = ascend_speed
+	#if state == State.DESCENDING and y_direction > 0:
+		#speed = descend_speed + (descend_speed * y_direction * 2)
 
 	var x_direction = Input.get_axis("left", "right")
 	if x_direction:
@@ -97,10 +113,21 @@ func spend_energy(delta):
 		set_state(State.ASCENDING)
 
 func hook_item(item: Node2D):
+	if item in catches.get_children():
+		return
+
+	if not item.is_connected("dropped", lost_item.bind(item)):
+		item.connect("dropped", lost_item.bind(item), CONNECT_DEFERRED)
+
 	item.call_deferred("hook", catches)
 	if item.is_in_group("fish"):
 		fish_on_hook = true
 		reel()
+
+func drop_item(item):
+	if item not in catches.get_children():
+		return
+	item.drop()
 
 func reel():
 	if state != State.DESCENDING:
@@ -113,8 +140,10 @@ func reel():
 func shake():
 	if state != State.ASCENDING:
 		return
-	# TODO
+	animation_player.play("shake")
 	spend_energy(shake_cost)
+	for item in catches.get_children():
+		item.shake()
 
 func catch():
 	camera.position.y = camera_offset
@@ -122,6 +151,17 @@ func catch():
 	hook.velocity = Vector2.ZERO
 	fish_on_hook = false
 	call_deferred('process_catches')
+
+func lost_item(item: Node2D):
+	item.disconnect("dropped", lost_item)
+	
+	if not fish_on_hook:
+		return
+
+	for child in catches.get_children():
+		if child.is_in_group("fish"):
+			return
+	fish_on_hook = false
 
 func cooldown(seconds, next_state: State=state):
 	set_state(State.COOLDOWN)
@@ -145,6 +185,9 @@ func process_catches():
 			item.global_position = collection.global_position
 
 func set_state(new_state):
-	print_debug(new_state)
 	# TODO exit/enter transitions
 	state = new_state
+
+func _on_catch_radius_body_entered(body: Node2D) -> void:
+	if body.is_in_group("catchable"):
+		hook_item(body)

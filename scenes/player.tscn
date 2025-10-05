@@ -1,13 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=8 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_g2els"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
-size = Vector2(10, 10)
+size = Vector2(6, 6)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g2els"]
-radius = 7.0
+radius = 5.0
+
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "shake"
+length = 1.0000042
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hook/Catches:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.041666508, 0.083333194, 0.125, 0.16666667, 0.20833333, 0.25, 0.29166666, 0.33333334, 0.375, 0.4166667, 0.4583333, 0.5, 0.5416667, 0.5776199, 0.6192866, 0.6609532, 0.7083333, 0.74428654, 0.7859533, 0.8276199, 0.8692866, 0.9109532, 0.9526199, 1.0000042),
+"transitions": PackedFloat32Array(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5),
+"update": 0,
+"values": [Vector2(0, 10), Vector2(-1, 9), Vector2(1, 10), Vector2(-2, 10), Vector2(1, 10), Vector2(0, 9), Vector2(2, 9), Vector2(-1, 10), Vector2(-3, 10), Vector2(-1, 9), Vector2(2, 10), Vector2(-1, 9), Vector2(1, 9), Vector2(-2, 10), Vector2(1, 11), Vector2(-3, 10), Vector2(0, 10), Vector2(1, 9), Vector2(-2, 10), Vector2(0, 9), Vector2(2, 9), Vector2(-2, 10), Vector2(1, 10), Vector2(0, 10)]
+}
+
+[sub_resource type="Animation" id="Animation_qhqgy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hook/Catches:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 10)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
+_data = {
+&"RESET": SubResource("Animation_qhqgy"),
+&"shake": SubResource("Animation_g2els")
+}
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_3vyb7")
@@ -39,6 +77,7 @@ drag_bottom_margin = 0.0
 position = Vector2(0, 10)
 
 [node name="CatchRadius" type="Area2D" parent="Hook"]
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/CatchRadius"]
 shape = SubResource("CircleShape2D_g2els")
@@ -55,3 +94,10 @@ texture = ExtResource("2_g2els")
 
 [node name="Collection" type="Node2D" parent="."]
 position = Vector2(39, -12)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_dqkch")
+}
+
+[connection signal="body_entered" from="Hook/CatchRadius" to="." method="_on_catch_radius_body_entered"]

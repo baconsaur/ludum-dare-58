@@ -35,32 +35,52 @@ rounded = true
 show_percentage = false
 
 [node name="Fish" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(157, 132)
+position = Vector2(96, 367)
 
 [node name="Terrain" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(36, 85)
+position = Vector2(45.000004, 323)
+scale = Vector2(0.39999998, 4.6400003)
+
+[node name="Terrain5" parent="." instance=ExtResource("5_iywne")]
+position = Vector2(269, 323)
+scale = Vector2(0.39999998, 4.6400003)
 
 [node name="Terrain2" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(292, 210)
+position = Vector2(168, 678)
+scale = Vector2(4.181698, 1.0405406)
 
 [node name="Terrain3" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(34, 335)
+position = Vector2(227.99998, 209.00006)
+rotation = -0.42848608
+scale = Vector2(0.94169736, 0.36054057)
+
+[node name="Terrain6" parent="." instance=ExtResource("5_iywne")]
+position = Vector2(106.99999, 418.00003)
+rotation = -0.020541444
+scale = Vector2(0.5540521, 0.14942732)
 
 [node name="Terrain4" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(251, 428)
+position = Vector2(77, 238)
+rotation = 0.35414013
+scale = Vector2(0.94169736, 0.36054057)
 
 [node name="Item" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(259, 132)
+position = Vector2(114, 597)
+
+[node name="Item5" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(206, 598)
+
+[node name="Item6" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(182, 599)
+
+[node name="Item4" parent="." instance=ExtResource("6_p57ef")]
+position = Vector2(119, 397)
 
 [node name="Item2" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(211, 349)
+position = Vector2(227, 169)
 
 [node name="Item3" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(233, 354)
+position = Vector2(125, 217)
 
 [node name="Fish2" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(211, 229)
-
-[node name="Fish3" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(77, 204)
-scale = Vector2(1.0011723, 0.962963)
+position = Vector2(211, 509)

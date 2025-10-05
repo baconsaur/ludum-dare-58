@@ -132,7 +132,6 @@ func set_state(new_state):
 	state = new_state
 
 func _on_detection_range_entered(body: Node2D) -> void:
-	print_debug(body.name)
 	if body.name != "Hook":
 		return
 	target = body

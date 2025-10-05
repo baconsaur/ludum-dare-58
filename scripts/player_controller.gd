@@ -106,8 +106,6 @@ func move_hook(delta):
 	if state == State.ASCENDING:
 		if energy <= 0:
 			speed = ascend_speed * 2
-		elif fish_on_hook:
-			speed = ascend_speed * 0.9
 		elif y_direction < 0:
 			speed = ascend_speed + (ascend_speed * abs(y_direction) * 2)
 			spend_energy(delta * 2)

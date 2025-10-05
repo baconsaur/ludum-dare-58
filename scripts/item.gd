@@ -11,6 +11,7 @@ var hooked: bool = false
 var can_catch: bool = true
 
 @onready var original_parent = get_parent()
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
 	randomize()
@@ -55,7 +56,7 @@ func drop():
 	emit_signal("dropped")
 
 func remove():
-	queue_free() # TODO make it do an animation or something first
+	animation_player.play("lost")
 
 func _on_chain_area_body_entered(body: Node2D) -> void:
 	if not hooked:

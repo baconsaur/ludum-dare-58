@@ -1,18 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=10 format=3 uid="uid://5bs3j6op03mu"]
 
 [ext_resource type="Script" uid="uid://comuclmxm6gu7" path="res://scripts/game_controller.gd" id="1_u5sy4"]
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dgugr3b708uqa" path="res://ui/scenes/pause.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c544vis4otiqx" path="res://scenes/player.tscn" id="3_lnu2h"]
-[ext_resource type="PackedScene" uid="uid://bi5m3408m8yxi" path="res://scenes/fish.tscn" id="4_lbhrr"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="5_gee14"]
-[ext_resource type="PackedScene" uid="uid://cyclcira4yt1e" path="res://scenes/terrain.tscn" id="5_iywne"]
 [ext_resource type="PackedScene" uid="uid://kuk7qphqfskm" path="res://ui/scenes/game_over.tscn" id="6_0tnpc"]
-[ext_resource type="PackedScene" uid="uid://dcw6qoq4hayql" path="res://scenes/item.tscn" id="6_p57ef"]
 [ext_resource type="PackedScene" uid="uid://bfqpgl37gw4yb" path="res://ui/scenes/level_end.tscn" id="7_vtaks"]
+[ext_resource type="PackedScene" uid="uid://dyd2tfbxude33" path="res://ui/scenes/intro.tscn" id="8_vtaks"]
+[ext_resource type="PackedScene" uid="uid://bd06xgg3yj88s" path="res://scenes/level.tscn" id="9_0tnpc"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u5sy4")
+level_scene = ExtResource("9_0tnpc")
 
 [node name="Player" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(156, 34)
@@ -42,71 +42,5 @@ visible = false
 [node name="LevelEnd" parent="HUD" instance=ExtResource("7_vtaks")]
 visible = false
 
-[node name="Fish" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(96, 307)
-
-[node name="Terrain" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(57, 323)
-scale = Vector2(0.39999998, 4.6400003)
-
-[node name="Terrain5" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(254, 323)
-scale = Vector2(0.39999998, 4.6400003)
-
-[node name="Terrain2" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(168, 678)
-scale = Vector2(4.181698, 1.0405406)
-
-[node name="Terrain3" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(227.99997, 149.00006)
-rotation = -0.42848608
-scale = Vector2(0.94169736, 0.36054057)
-
-[node name="Terrain6" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(107, 358)
-rotation = -0.020541444
-scale = Vector2(0.5540521, 0.14942732)
-
-[node name="Terrain4" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(77.00001, 178)
-rotation = 0.35414013
-scale = Vector2(0.94169736, 0.36054057)
-
-[node name="Item" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(114, 597)
-
-[node name="Item5" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(206, 598)
-
-[node name="Item6" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(182, 599)
-
-[node name="Item4" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(119, 337)
-
-[node name="Item2" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(227, 109)
-
-[node name="Item3" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(125, 157)
-
-[node name="Terrain7" parent="." instance=ExtResource("5_iywne")]
-position = Vector2(97, 71)
-rotation = 0.35414013
-scale = Vector2(0.94169736, 0.36054057)
-
-[node name="Item7" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(119, 46)
-
-[node name="Item8" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(145, 57)
-
-[node name="Item9" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(107, 38)
-
-[node name="Item10" parent="." instance=ExtResource("6_p57ef")]
-position = Vector2(212, 125)
-
-[node name="Fish2" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(181, 125)
-patrol_range = 30.0
+[node name="Intro" parent="HUD" instance=ExtResource("8_vtaks")]
+visible = false

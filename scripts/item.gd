@@ -3,6 +3,7 @@ extends RigidBody2D
 signal dropped
 signal touched_item
 
+@export var value: int = 10
 @export var drop_chance = 0.2
 @export var drop_offset: Vector2 = Vector2(0, 10.0)
 @export var throw_speed: float = 80.0
@@ -12,14 +13,17 @@ var can_catch: bool = true
 
 @onready var original_parent = get_parent()
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var value_label: Label = $Value
 
 func _ready() -> void:
 	randomize()
+	value_label.text = str(value)
 
 func hook(catch_zone):
 	if hooked or not can_catch:
 		return
 	
+	animation_player.play("pickup")
 	original_parent.remove_child(self)
 	catch_zone.add_child(self)
 	freeze = true

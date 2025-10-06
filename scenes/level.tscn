@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd06xgg3yj88s"]
+
+[ext_resource type="PackedScene" uid="uid://cyclcira4yt1e" path="res://scenes/terrain.tscn" id="1_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://dcw6qoq4hayql" path="res://scenes/item.tscn" id="2_w8frs"]
+
+[node name="Level" type="Node2D"]
+
+[node name="Terrain" parent="." instance=ExtResource("1_w7c3h")]
+position = Vector2(155.99998, 140.00002)
+scale = Vector2(2.24, 0.27999997)
+
+[node name="Terrain2" parent="." instance=ExtResource("1_w7c3h")]
+position = Vector2(58, 55)
+rotation = 1.5707964
+scale = Vector2(2.24, 0.27999997)
+
+[node name="Terrain3" parent="." instance=ExtResource("1_w7c3h")]
+position = Vector2(257, 48)
+rotation = 1.5707964
+scale = Vector2(2.24, 0.27999997)
+
+[node name="Item" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(83, 105)
+
+[node name="Item2" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(102, 113)
+
+[node name="Item3" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(206, 108)
+
+[node name="Item4" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(126, 115)
+
+[node name="Item5" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(218, 68)
+
+[node name="Item6" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(196, 79)
+
+[node name="Item7" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(116, 80)
+
+[node name="Item8" parent="." instance=ExtResource("2_w8frs")]
+position = Vector2(163, 108)

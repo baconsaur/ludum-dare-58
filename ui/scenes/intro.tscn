@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfqpgl37gw4yb"]
+[gd_scene load_steps=4 format=3 uid="uid://dyd2tfbxude33"]
 
-[ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_k3dij"]
-[ext_resource type="Script" uid="uid://ge7pxpy26qyx" path="res://ui/scripts/game_over.gd" id="2_xb88x"]
-[ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_q2lk1"]
+[ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_pq4t3"]
+[ext_resource type="Script" uid="uid://ge7pxpy26qyx" path="res://ui/scripts/game_over.gd" id="2_q0vqx"]
+[ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_uspnk"]
 
-[node name="LevelEnd" instance=ExtResource("1_k3dij")]
-script = ExtResource("2_xb88x")
-content_template = "Sold junk for [color=\"yellow\"]${earnings}[/color][br][br]Savings: ${savings}[br]Room: [color=\"red\"]-${room_cost}[/color][br]Food: [color=\"red\"]-${food_cost}[/color][br][hr height=1 color=\"dark_gray\"][br]Final balance: ${balance}[br][br]{comment}"
+[node name="Intro" instance=ExtResource("1_pq4t3")]
+script = ExtResource("2_q0vqx")
 
 [node name="MarginContainer" type="MarginContainer" parent="." index="0"]
 layout_mode = 1
@@ -15,7 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("3_q2lk1")
+theme = ExtResource("3_uspnk")
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
@@ -31,20 +30,14 @@ theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="Title" parent="Margin/Content" index="0"]
-text = "Day 1"
+text = "TODO"
 
 [node name="Text" type="RichTextLabel" parent="Margin/Content" index="1"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "Sold junk for [color=\"yellow\"]$0[/color]
-
-Savings: $0
-Room: [color=\"red\"]-$0[/color]
-Food: [color=\"red\"]-$0[/color]
-[hr height=1 color=\"dark_gray\"]
-Final balance: $0"
+text = "[FLAVOR TEXT]"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -55,10 +48,10 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
 
-[node name="Next" type="Button" parent="Margin/Content/Actions" index="0"]
+[node name="Start" type="Button" parent="Margin/Content/Actions" index="0"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Next Day"
+text = "Start"
 
-[connection signal="pressed" from="Margin/Content/Actions/Next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Margin/Content/Actions/Start" to="." method="_on_start_pressed"]

@@ -3,6 +3,7 @@ extends Node2D
 signal energy_change
 signal died
 signal day_end
+signal got_items
 
 enum State {
 	IDLE,
@@ -30,6 +31,7 @@ var fish_on_hook: bool = false
 var can_change_y: bool = true
 
 @onready var hook = $Hook
+@onready var hook_collider = $Hook/CollisionShape2D
 @onready var sprite = $PlayerSprite
 @onready var catches = $Hook/Catches
 @onready var collection = $PlayerSprite/Collection
@@ -37,20 +39,18 @@ var can_change_y: bool = true
 @onready var line: Line2D = $Line
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var catch_radius: Area2D = $Hook/CatchRadius
+@onready var player_spawn: Vector2 = position
 
 func _ready() -> void:
 	randomize()
-	
-	hook.position = hook_origin
-	camera.position.y = camera_offset
-	
-	energy = max_energy
-	emit_signal("energy_change", energy)
+	reset()
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("action"):
 		take_action()
 		return
+	elif Input.is_action_just_pressed("down") and state == State.IDLE:
+		cast()
 	
 	if fish_on_hook or not can_change_y or energy <= 0:
 		return
@@ -64,8 +64,34 @@ func _physics_process(delta: float) -> void:
 	move_hook(delta)
 	move_player(delta)
 
+func reset(start_energy=max_energy):
+	position = player_spawn
+	hook.position = hook_origin
+	camera.position.y = camera_offset
+	
+	energy = start_energy
+	emit_signal("energy_change", energy)
+	
+	fish_on_hook = false
+	can_change_y = true
+
+	hook_collider.set_deferred("disabled", false)
+	catch_radius.set_deferred("monitoring", true)
+	
+	for item in catches.get_children():
+		item.queue_free()
+	for item in collection.get_children():
+		item.queue_free()
+	
+	set_state(State.IDLE)
+
 func move_player(delta):
-	if abs(sprite.global_position.x - hook.global_position.x) > max_hook_range / 5:
+	if state == State.IDLE:
+		var x_direction = Input.get_axis("left", "right")
+		if x_direction:
+			position.x += x_direction * player_speed * delta
+			hook.global_position.x = global_position.x
+	elif abs(sprite.global_position.x - hook.global_position.x) > 0:
 		sprite.global_position.x = move_toward(
 			sprite.global_position.x,
 			hook.global_position.x,
@@ -75,8 +101,6 @@ func move_player(delta):
 func take_action():
 	if state == State.COOLDOWN or energy <= 0:
 		return
-	elif state == State.IDLE:
-		cast()
 	elif fish_on_hook:
 		shake()
 
@@ -105,7 +129,7 @@ func move_hook(delta):
 	var speed = descend_speed
 	if state == State.ASCENDING:
 		if energy <= 0:
-			speed = ascend_speed * 2
+			speed = ascend_speed * 5
 		elif y_direction < 0:
 			speed = ascend_speed + (ascend_speed * abs(y_direction) * 2)
 			spend_energy(delta * 2)
@@ -113,7 +137,8 @@ func move_hook(delta):
 			speed = ascend_speed
 
 	var x_direction = Input.get_axis("left", "right")
-	if x_direction and abs(sprite.global_position.x - hook.global_position.x) < max_hook_range:
+	#if x_direction and abs(sprite.global_position.x - hook.global_position.x) < max_hook_range:
+	if x_direction:
 		hook.velocity.x = x_direction * speed.x
 	else: 
 		hook.velocity.x = move_toward(hook.velocity.x, 0, speed.x * delta)
@@ -124,6 +149,7 @@ func move_hook(delta):
 	if hook.position.y <= hook_origin.y: 
 		catch()
 	elif hook.position.y >= max_depth:
+		animation_player.play("max_depth")
 		reel()
 	elif state == State.ASCENDING and hook.velocity.y <= 0.01:
 		hook.position.x = hook.position.move_toward(hook_origin, ascend_speed.x * delta).x
@@ -140,7 +166,12 @@ func spend_energy(delta):
 	energy -= delta
 	emit_signal("energy_change", energy)
 	
-	if energy <= 0 and state == State.DESCENDING:
+	if energy > 0:
+		return
+
+	hook_collider.set_deferred("disabled", true)
+	catch_radius.set_deferred("monitoring", false)
+	if state == State.DESCENDING:
 		set_state(State.ASCENDING)
 
 func hook_item(item: Node2D):
@@ -221,6 +252,7 @@ func delay_y_change():
 func process_catches():
 	cooldown(0.25 * (catches.get_child_count() + 1), State.IDLE)
 	
+	var new_item_count = 0
 	for item in catches.get_children():
 		if item.is_in_group("fish"):
 			var collection_size = collection.get_child_count()
@@ -235,9 +267,21 @@ func process_catches():
 		else:
 			catches.remove_child(item)
 			collection.add_child(item)
+			new_item_count += 1
 	
+	emit_signal("got_items", new_item_count)
+
 	if energy <= 0:
-		emit_signal("day_end")
+		var catch_value = get_catch_value()
+
+		emit_signal("day_end", catch_value)
+
+func get_catch_value() -> int:
+	var catch_value: int = 0
+	for item in collection.get_children():
+		catch_value += item.value
+
+	return catch_value
 
 func set_state(new_state):
 	# TODO exit/enter transitions

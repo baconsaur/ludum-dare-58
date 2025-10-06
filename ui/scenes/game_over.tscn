@@ -32,10 +32,11 @@ theme_override_constants/margin_bottom = 4
 [node name="Title" parent="Margin/Content" index="0"]
 text = "Game Over"
 
-[node name="Stats" type="RichTextLabel" parent="Margin/Content" index="1"]
+[node name="Text" type="RichTextLabel" parent="Margin/Content" index="1"]
 clip_contents = false
 layout_mode = 2
 size_flags_vertical = 3
+bbcode_enabled = true
 text = "u ded lmao"
 fit_content = true
 scroll_active = false

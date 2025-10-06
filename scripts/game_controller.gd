@@ -43,8 +43,8 @@ func load_level(level):
 		return
 	
 	if current_level != null:
-		current_level.queue_free()
 		current_level = null
+		current_level.queue_free()
 
 	current_level = level.instantiate()
 	add_child(current_level)

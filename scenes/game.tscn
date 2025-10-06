@@ -92,7 +92,7 @@ follow_viewport_enabled = true
 
 [node name="Parallax2D" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0, 1)
-scroll_offset = Vector2(85, -13)
+scroll_offset = Vector2(85, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D"]
 z_index = -10
@@ -100,7 +100,7 @@ texture = ExtResource("13_kvuet")
 
 [node name="Parallax2D6" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.05, 1)
-scroll_offset = Vector2(-1, 32.4)
+scroll_offset = Vector2(-40, 32.4)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
@@ -111,7 +111,7 @@ texture = ExtResource("14_trtic")
 
 [node name="Parallax2D3" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.15, 1)
-scroll_offset = Vector2(-46.585, 42.5)
+scroll_offset = Vector2(-40, 42.5)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
@@ -122,7 +122,7 @@ texture = ExtResource("15_ir15t")
 
 [node name="Parallax2D4" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.3, 1)
-scroll_offset = Vector2(-1, 55)
+scroll_offset = Vector2(-40, 55)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
@@ -133,7 +133,7 @@ texture = ExtResource("16_ca42v")
 
 [node name="Parallax2D5" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.3, 1)
-scroll_offset = Vector2(-1, 55)
+scroll_offset = Vector2(-40, 55)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 

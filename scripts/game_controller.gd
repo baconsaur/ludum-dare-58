@@ -38,15 +38,15 @@ func _ready() -> void:
 	
 	energy_bar.max_value = player.max_energy
 
-func load_level(level):
-	if not level:
+func load_level(new_level):
+	if not new_level:
 		return
 	
 	if current_level != null:
-		current_level = null
 		current_level.queue_free()
+		current_level = null
 
-	current_level = level.instantiate()
+	current_level = new_level.instantiate()
 	add_child(current_level)
 	
 	items_left = current_level.find_children("Item*").size()
@@ -83,7 +83,9 @@ func level_complete(catch_value):
 	player.max_energy += 10
 	if not day % 2:
 		comment += "[br]You got a longer fishing line."
-		player.max_depth += 50
+	player.max_depth += 50
+	room_cost += 1
+	food_cost += 1
 	
 	if balance + catch_value < room_cost:
 		game_over("You couldn't afford a room. You were eaten by a mutant.")
@@ -113,12 +115,11 @@ func level_complete(catch_value):
 	balance = final_balance
 	day += 1
 	player.reset(player.max_energy / (meals_skipped + 1))
-	
-	get_tree().paused = true
-	level_end_modal.visible = true
-
 	if level + 1 < level_scenes.size():
 		level += 1
 	else:
 		level = 1
 	load_level(level_scenes[level])
+	
+	get_tree().paused = true
+	level_end_modal.visible = true

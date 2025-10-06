@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dcw6qoq4hayql"]
 
 [ext_resource type="Script" uid="uid://cew2l5rqdqybj" path="res://scripts/item.gd" id="1_s8enn"]
-[ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_6muww"]
+[ext_resource type="Texture2D" uid="uid://drwouva3em2l4" path="res://sprites/item.png" id="2_6muww"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_6muww"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s8enn"]
@@ -251,6 +251,7 @@ colors = PackedColorArray(1, 1, 1, 0.8, 1, 1, 1, 0)
 
 [node name="Item" type="RigidBody2D" groups=["catchable"]]
 modulate = Color(0.525, 1, 0.25, 1)
+z_index = 1
 collision_layer = 2
 mass = 0.5
 physics_material_override = SubResource("PhysicsMaterial_s8enn")
@@ -265,7 +266,6 @@ script = ExtResource("1_s8enn")
 shape = SubResource("RectangleShape2D_nub35")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.07424564, 0.07424564)
 texture = ExtResource("2_6muww")
 
 [node name="ChainArea" type="Area2D" parent="."]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=11 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
-[ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://qiks6fj1gujw" path="res://sprites/hook.png" id="2_dqkch"]
+[ext_resource type="Texture2D" uid="uid://8ev4tae5wtfh" path="res://sprites/player.png" id="3_dqkch"]
 [ext_resource type="Script" uid="uid://dbmojvl1l3qyn" path="res://scripts/collection.gd" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
@@ -49,6 +50,23 @@ tracks/2/keys = {
 "values": [Color(0.8884254, 0.88842535, 0.88842535, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_dqkch"]
+resource_name = "max_depth"
+length = 0.41667086
+step = 0.041666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Line:default_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833334, 0.25, 0.29166666, 0.33333334, 0.375, 0.41667086),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_g2els"]
 resource_name = "shake"
 length = 1.0000042
@@ -78,23 +96,6 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 0), Vector2(-2, 0), Vector2(1, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-1, 0), Vector2(-3, 0), Vector2(-1, -1), Vector2(2, 0), Vector2(-1, -1), Vector2(1, -1), Vector2(-2, 0), Vector2(1, 1), Vector2(-3, 0), Vector2(0, 0), Vector2(1, -1), Vector2(-2, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-2, 0), Vector2(1, 0), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_dqkch"]
-resource_name = "max_depth"
-length = 0.41667086
-step = 0.041666668
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Line:default_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.041666668, 0.083333336, 0.125, 0.16666667, 0.20833334, 0.25, 0.29166666, 0.33333334, 0.375, 0.41667086),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1), Color(0.89, 0.30259997, 0.30259997, 1), Color(0.8884254, 0.88842535, 0.88842535, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
 _data = {
 &"RESET": SubResource("Animation_qhqgy"),
@@ -103,9 +104,13 @@ _data = {
 }
 
 [node name="Player" type="Node2D"]
+z_index = 5
 script = ExtResource("1_3vyb7")
+hook_origin = Vector2(0, -2)
+item_height = 12
 
 [node name="Hook" type="CharacterBody2D" parent="."]
+position = Vector2(0, -2)
 collision_layer = 4
 collision_mask = 2
 motion_mode = 1
@@ -113,12 +118,12 @@ floor_stop_on_slope = false
 floor_max_angle = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook"]
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_3vyb7")
 
 [node name="HookSprite" type="Sprite2D" parent="Hook"]
 z_index = 1
-scale = Vector2(0.07812499, 0.078125)
-texture = ExtResource("2_g2els")
+texture = ExtResource("2_dqkch")
 
 [node name="Camera2D" type="Camera2D" parent="Hook"]
 position_smoothing_enabled = true
@@ -133,24 +138,24 @@ drag_bottom_margin = 0.0
 position = Vector2(0, 10)
 
 [node name="CatchRadius" type="Area2D" parent="Hook"]
+position = Vector2(0, 1)
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hook/CatchRadius"]
 shape = SubResource("CircleShape2D_g2els")
 
 [node name="Line" type="Line2D" parent="."]
+position = Vector2(0, -3)
 points = PackedVector2Array(0, 0, 0, 0)
 width = 1.0
 default_color = Color(0.8884254, 0.88842535, 0.88842535, 1)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -20.000015)
-scale = Vector2(0.15625, 0.15625001)
-texture = ExtResource("2_g2els")
+texture = ExtResource("3_dqkch")
 
 [node name="Collection" type="Node2D" parent="PlayerSprite"]
-position = Vector2(100, 25.6)
-scale = Vector2(6.4, 6.399999)
+position = Vector2(15, 0)
 script = ExtResource("3_qhqgy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

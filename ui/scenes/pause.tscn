@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgugr3b708uqa"]
+[gd_scene load_steps=8 format=3 uid="uid://dgugr3b708uqa"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_xld5c"]
 [ext_resource type="Script" uid="uid://jcr88fs3yb06" path="res://ui/scripts/pause.gd" id="2_k23cl"]
@@ -10,6 +10,12 @@ base_font = ExtResource("3_vwvne")
 spacing_top = -2
 spacing_bottom = -2
 baseline_offset = 0.15
+
+[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
+action = &"action"
+
+[sub_resource type="Shortcut" id="Shortcut_vwvne"]
+events = [SubResource("InputEventAction_pvlg3")]
 
 [node name="Pause" instance=ExtResource("1_xld5c")]
 script = ExtResource("2_k23cl")
@@ -34,6 +40,8 @@ size_flags_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+shortcut = SubResource("Shortcut_vwvne")
+shortcut_in_tooltip = false
 text = "Resume"
 
 [node name="MainMenu" type="Button" parent="Margin/Content/Actions" index="1"]

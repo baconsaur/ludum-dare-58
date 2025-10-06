@@ -66,6 +66,7 @@ func _physics_process(delta: float) -> void:
 
 func reset(start_energy=max_energy):
 	position = player_spawn
+	hook.velocity = Vector2.ZERO
 	hook.position = hook_origin
 	camera.position.y = camera_offset
 	

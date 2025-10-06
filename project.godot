@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ludum Dare 58"
-run/main_scene="uid://5bs3j6op03mu"
+run/main_scene="uid://cdceaenvnjnfy"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/use_filter=false
 boot_splash/image="uid://bwegy3b4frmw1"
@@ -83,5 +83,6 @@ down={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.3137255, 0.28627452, 0.2627451, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true

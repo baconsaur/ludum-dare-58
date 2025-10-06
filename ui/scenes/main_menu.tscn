@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cdceaenvnjnfy"]
+[gd_scene load_steps=5 format=3 uid="uid://cdceaenvnjnfy"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_tfcyl"]
 [ext_resource type="Script" uid="uid://c5rj1cwd0cm8a" path="res://ui/scripts/main_menu.gd" id="2_pvlg3"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
+action = &"action"
+
+[sub_resource type="Shortcut" id="Shortcut_h3oyo"]
+events = [SubResource("InputEventAction_pvlg3")]
 
 [node name="MainMenu" type="Node2D"]
 
@@ -22,6 +28,8 @@ size_flags_vertical = 6
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+shortcut = SubResource("Shortcut_h3oyo")
+shortcut_in_tooltip = false
 text = "Play"
 
 [connection signal="pressed" from="CanvasLayer/Menu/Margin/Content/Actions/Play" to="CanvasLayer/Menu" method="_on_play_pressed"]

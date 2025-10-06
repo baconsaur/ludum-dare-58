@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=14 format=3 uid="uid://5bs3j6op03mu"]
 
 [ext_resource type="Script" uid="uid://comuclmxm6gu7" path="res://scripts/game_controller.gd" id="1_u5sy4"]
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
@@ -9,6 +9,19 @@
 [ext_resource type="PackedScene" uid="uid://bfqpgl37gw4yb" path="res://ui/scenes/level_end.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://dyd2tfbxude33" path="res://ui/scenes/intro.tscn" id="8_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bd06xgg3yj88s" path="res://scenes/level.tscn" id="9_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://6bhkxxyniio8" path="res://sprites/background.png" id="10_vtaks"]
+[ext_resource type="Shader" uid="uid://ddo3x8ewxmbcq" path="res://scenes/game.gdshader" id="11_dinhu"]
+[ext_resource type="Texture2D" uid="uid://bi2q630c0kt8s" path="res://sprites/water.png" id="11_kvpfn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
+shader = ExtResource("11_dinhu")
+shader_parameter/wave_color = Color(0.27450982, 0.25882354, 0.24705882, 1)
+shader_parameter/wave_size = 0.0070000003325
+shader_parameter/wave_frequency = 0.022000001045
+shader_parameter/wave_speed = 1.4000000665
+shader_parameter/border_size = 0.0030000001425
+shader_parameter/edge_height = 0.95200004522
+shader_parameter/border_color = Color(0.7, 0.62906665, 0.567, 0.1254902)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u5sy4")
@@ -44,3 +57,16 @@ visible = false
 
 [node name="Intro" parent="HUD" instance=ExtResource("8_vtaks")]
 visible = false
+
+[node name="Background" type="Node2D" parent="."]
+z_index = -5
+position = Vector2(0, -100)
+
+[node name="Ruins" type="Sprite2D" parent="Background"]
+position = Vector2(156, 32)
+texture = ExtResource("10_vtaks")
+
+[node name="Water" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_kvuet")
+position = Vector2(159, 255)
+texture = ExtResource("11_kvpfn")

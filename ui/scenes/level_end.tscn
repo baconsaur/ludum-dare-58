@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfqpgl37gw4yb"]
+[gd_scene load_steps=6 format=3 uid="uid://bfqpgl37gw4yb"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_k3dij"]
 [ext_resource type="Script" uid="uid://ge7pxpy26qyx" path="res://ui/scripts/game_over.gd" id="2_xb88x"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_q2lk1"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
+action = &"action"
+
+[sub_resource type="Shortcut" id="Shortcut_k3dij"]
+events = [SubResource("InputEventAction_pvlg3")]
 
 [node name="LevelEnd" instance=ExtResource("1_k3dij")]
 script = ExtResource("2_xb88x")
@@ -59,6 +65,8 @@ size_flags_vertical = 10
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+shortcut = SubResource("Shortcut_k3dij")
+shortcut_in_tooltip = false
 text = "Next Day"
 
 [connection signal="pressed" from="Margin/Content/Actions/Next" to="." method="_on_next_pressed"]

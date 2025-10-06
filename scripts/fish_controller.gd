@@ -28,6 +28,7 @@ var can_catch: bool = true
 @onready var body_collider: CollisionShape2D = $CollisionShape2D
 @onready var detect_collider: CollisionShape2D = $DetectionZone/CollisionShape2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	origin = position
@@ -45,13 +46,16 @@ func move(delta):
 	
 	if position.x > origin.x + patrol_range:
 		x_direction = -1
+		sprite.flip_h = false
 	elif position.x < origin.x - patrol_range:
 		x_direction = 1
+		sprite.flip_h = true
 
 	velocity.x = x_direction * idle_speed
 	var collided = move_and_slide()
 	if collided:
 		x_direction *= -1
+		sprite.flip_h = not sprite.flip_h
 
 func pursue(delta):
 	if state != State.ALERT:
@@ -120,6 +124,9 @@ func drop():
 	body_collider.set_deferred("disabled", false)
 	detect_collider.set_deferred("disabled", false)
 	can_catch = true
+
+func collect():
+	modulate = Color.WHITE
 
 func attack():
 	pass

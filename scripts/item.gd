@@ -3,6 +3,8 @@ extends RigidBody2D
 signal dropped
 signal touched_item
 
+@export var textures: Array[CompressedTexture2D]
+@export var values: Array[int]
 @export var value: int = 10
 @export var drop_chance = 0.2
 @export var drop_offset: Vector2 = Vector2(0, 10.0)
@@ -14,9 +16,16 @@ var can_catch: bool = true
 @onready var original_parent = get_parent()
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var value_label: Label = $Value
+@onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
 	randomize()
+	
+	var random_index = randi_range(0, textures.size() - 1)
+	sprite.texture = textures[random_index]
+	if values.size() > random_index:
+		value = values[random_index]
+	
 	value_label.text = str(value)
 
 func hook(catch_zone):
@@ -45,6 +54,9 @@ func throw():
 	await get_tree().create_timer(1.0).timeout
 	hooked = false
 	can_catch = true
+
+func collect():
+	modulate = Color.WHITE
 
 func drop():
 	if not hooked:

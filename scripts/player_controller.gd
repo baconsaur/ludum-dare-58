@@ -12,10 +12,11 @@ enum State {
 	COOLDOWN,
 }
 
-@export var ascend_speed: Vector2 = Vector2(20.0, -20.0)
-@export var descend_speed: Vector2 = Vector2(20.0, 30.0)
-@export var player_speed: float = 45.0
+@export var ascend_speed: Vector2 = Vector2(25.0, -20.0)
+@export var descend_speed: Vector2 = Vector2(25.0, 30.0)
+@export var player_speed: float = 25.0
 @export var hook_origin: Vector2 = Vector2.ZERO
+@export var line_origin: Vector2 = Vector2.ZERO
 @export var camera_offset: int = 40
 @export var max_depth: int = 200
 @export var cooldown_time: float = 2.0
@@ -155,8 +156,8 @@ func move_hook(delta):
 	elif state == State.ASCENDING and hook.velocity.y <= 0.01:
 		hook.position.x = hook.position.move_toward(hook_origin, ascend_speed.x * delta).x
 		
-	line.set_point_position(0, sprite.position)
-	line.set_point_position(1, hook.position)
+	line.set_point_position(0, sprite.position + line_origin)
+	line.set_point_position(1, hook.position + line_origin)
 	if state == State.DESCENDING:
 		spend_energy(delta)
 
@@ -266,6 +267,7 @@ func process_catches():
 				emit_signal("died")
 			item.queue_free()
 		else:
+			item.collect()
 			catches.remove_child(item)
 			collection.add_child(item)
 			new_item_count += 1

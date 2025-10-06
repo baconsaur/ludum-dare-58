@@ -1,5 +1,6 @@
 shader_type canvas_item;
 
+uniform sampler2D main_color;
 uniform vec3 wave_color: source_color;
 uniform float wave_size : hint_range(0.0, 1.0) = 0.1;
 uniform float wave_frequency : hint_range(0.0, 0.1
@@ -11,7 +12,7 @@ uniform vec4 border_color : source_color;
 
 void fragment() {
 	float value = (1.0 - UV.y) * (1.0 - wave_size - border_size);
-	vec4 color = COLOR.rgba;
+	vec4 color = texture(main_color, UV);
 
 	float wave_height = edge_height - (sin(UV.x / wave_frequency + TIME * wave_speed) + 1.0) / 2.0 * wave_size;
 

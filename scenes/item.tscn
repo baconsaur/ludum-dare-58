@@ -1,8 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://dcw6qoq4hayql"]
+[gd_scene load_steps=18 format=3 uid="uid://dcw6qoq4hayql"]
 
 [ext_resource type="Script" uid="uid://cew2l5rqdqybj" path="res://scripts/item.gd" id="1_s8enn"]
-[ext_resource type="Texture2D" uid="uid://drwouva3em2l4" path="res://sprites/item.png" id="2_6muww"]
+[ext_resource type="Texture2D" uid="uid://k3imgkukhu60" path="res://sprites/item1.png" id="2_6muww"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_6muww"]
+[ext_resource type="Texture2D" uid="uid://b738fo7jjydu7" path="res://sprites/item2.png" id="3_vljjh"]
+[ext_resource type="Texture2D" uid="uid://87h1twdv0g6f" path="res://sprites/item3.png" id="4_v0cwl"]
+[ext_resource type="Texture2D" uid="uid://mgjvk411yxxn" path="res://sprites/item4.png" id="5_xr48l"]
+[ext_resource type="Texture2D" uid="uid://c4xpqkxbbw310" path="res://sprites/item5.png" id="6_34t5m"]
+[ext_resource type="Texture2D" uid="uid://c3st5h8pw1t2k" path="res://sprites/item6.png" id="7_j134a"]
+[ext_resource type="Texture2D" uid="uid://cvtclyn5jdgd8" path="res://sprites/item7.png" id="8_2xo3q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_s8enn"]
 friction = 10.0
@@ -250,7 +256,7 @@ offsets = PackedFloat32Array(0.47964376, 0.93257)
 colors = PackedColorArray(1, 1, 1, 0.8, 1, 1, 1, 0)
 
 [node name="Item" type="RigidBody2D" groups=["catchable"]]
-modulate = Color(0.525, 1, 0.25, 1)
+modulate = Color(0.6048, 0.6237, 0.63, 1)
 z_index = 1
 collision_layer = 2
 mass = 0.5
@@ -261,6 +267,8 @@ lock_rotation = true
 contact_monitor = true
 max_contacts_reported = 10
 script = ExtResource("1_s8enn")
+textures = [ExtResource("2_6muww"), ExtResource("3_vljjh"), ExtResource("4_v0cwl"), ExtResource("5_xr48l"), ExtResource("6_34t5m"), ExtResource("7_j134a"), ExtResource("8_2xo3q")]
+values = Array[int]([5, 3, 8, 25, 15, 2, 10])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["catchable"]]
 shape = SubResource("RectangleShape2D_nub35")

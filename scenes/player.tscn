@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=12 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://qiks6fj1gujw" path="res://sprites/hook.png" id="2_dqkch"]
@@ -103,13 +103,18 @@ _data = {
 &"shake": SubResource("Animation_g2els")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+
 [node name="Player" type="Node2D"]
 z_index = 5
 script = ExtResource("1_3vyb7")
 hook_origin = Vector2(0, -2)
+line_origin = Vector2(0, 20)
+camera_offset = 60
 item_height = 12
 
 [node name="Hook" type="CharacterBody2D" parent="."]
+z_index = 1
 position = Vector2(0, -2)
 collision_layer = 4
 collision_mask = 2
@@ -145,16 +150,19 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_g2els")
 
 [node name="Line" type="Line2D" parent="."]
-position = Vector2(0, -3)
-points = PackedVector2Array(0, 0, 0, 0)
+z_index = 1
+position = Vector2(0, -24)
+points = PackedVector2Array(0, 0, 0, 18)
 width = 1.0
 default_color = Color(0.8884254, 0.88842535, 0.88842535, 1)
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -20.000015)
 texture = ExtResource("3_dqkch")
+offset = Vector2(20, 0)
 
 [node name="Collection" type="Node2D" parent="PlayerSprite"]
+z_index = -2
 position = Vector2(15, 0)
 script = ExtResource("3_qhqgy")
 
@@ -162,6 +170,13 @@ script = ExtResource("3_qhqgy")
 libraries = {
 &"": SubResource("AnimationLibrary_dqkch")
 }
+
+[node name="AttackZone" type="Area2D" parent="."]
+position = Vector2(0, 12.000001)
+scale = Vector2(18.240002, 2.44)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
+shape = SubResource("RectangleShape2D_dqkch")
 
 [connection signal="child_order_changed" from="Hook/Catches" to="." method="_on_catches_child_order_changed" flags=3]
 [connection signal="body_entered" from="Hook/CatchRadius" to="." method="_on_catch_radius_body_entered"]

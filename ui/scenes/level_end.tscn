@@ -1,16 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfqpgl37gw4yb"]
+[gd_scene load_steps=4 format=3 uid="uid://bfqpgl37gw4yb"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_k3dij"]
 [ext_resource type="Script" uid="uid://ge7pxpy26qyx" path="res://ui/scripts/game_over.gd" id="2_xb88x"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_q2lk1"]
 
-[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
-action = &"action"
-
-[sub_resource type="Shortcut" id="Shortcut_k3dij"]
-events = [SubResource("InputEventAction_pvlg3")]
-
 [node name="LevelEnd" instance=ExtResource("1_k3dij")]
+size_flags_vertical = 4
 script = ExtResource("2_xb88x")
 content_template = "Sold junk for [color=\"yellow\"]${earnings}[/color][br][br]Savings: ${savings}[br]Room: [color=\"red\"]-${room_cost}[/color][br]Food: [color=\"red\"]-${food_cost}[/color][br][hr height=1 color=\"dark_gray\"][br]Final balance: ${balance}[br][br]{comment}"
 
@@ -28,13 +23,18 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
 [node name="Panel" type="Panel" parent="MarginContainer" index="0"]
+custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Margin" parent="." index="1"]
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
+
+[node name="Content" parent="Margin" index="0"]
+alignment = 1
 
 [node name="Title" parent="Margin/Content" index="0"]
 text = "Day 1"
@@ -65,7 +65,6 @@ size_flags_vertical = 10
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-shortcut = SubResource("Shortcut_k3dij")
 shortcut_in_tooltip = false
 text = "Next Day"
 

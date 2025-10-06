@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c544vis4otiqx"]
+[gd_scene load_steps=13 format=3 uid="uid://c544vis4otiqx"]
 
 [ext_resource type="Script" uid="uid://i8d7v3kbh1e5" path="res://scripts/player_controller.gd" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://qiks6fj1gujw" path="res://sprites/hook.png" id="2_dqkch"]
@@ -49,6 +49,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [Color(0.8884254, 0.88842535, 0.88842535, 1)]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PlayerSprite:offset")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_dqkch"]
 resource_name = "max_depth"
@@ -96,14 +108,32 @@ tracks/1/keys = {
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 0), Vector2(-2, 0), Vector2(1, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-1, 0), Vector2(-3, 0), Vector2(-1, -1), Vector2(2, 0), Vector2(-1, -1), Vector2(1, -1), Vector2(-2, 0), Vector2(1, 1), Vector2(-3, 0), Vector2(0, 0), Vector2(1, -1), Vector2(-2, 0), Vector2(0, -1), Vector2(2, -1), Vector2(-2, 0), Vector2(1, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_qlg0r"]
+resource_name = "hit"
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.084610604, 0.16666667, 0.2538318, 0.33333334, 0.4166667, 0.5, 0.5833334, 0.6666667, 0.75, 0.8333334, 0.9166667, 1),
+"transitions": PackedFloat32Array(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2),
+"update": 0,
+"values": [Vector2(20, 0), Vector2(21, 0), Vector2(18, 0), Vector2(17, 0), Vector2(19, 0), Vector2(21, 0), Vector2(18, 0), Vector2(20, 0), Vector2(22, 0), Vector2(19, 0), Vector2(21, 0), Vector2(19, 0), Vector2(20, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
 _data = {
 &"RESET": SubResource("Animation_qhqgy"),
+&"hit": SubResource("Animation_qlg0r"),
 &"max_depth": SubResource("Animation_dqkch"),
 &"shake": SubResource("Animation_g2els")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dqkch"]
+size = Vector2(20, 15.32787)
 
 [node name="Player" type="Node2D"]
 z_index = 5
@@ -111,6 +141,7 @@ script = ExtResource("1_3vyb7")
 hook_origin = Vector2(0, -2)
 line_origin = Vector2(0, 20)
 camera_offset = 60
+max_depth = 400
 item_height = 12
 
 [node name="Hook" type="CharacterBody2D" parent="."]
@@ -174,10 +205,15 @@ libraries = {
 [node name="AttackZone" type="Area2D" parent="."]
 position = Vector2(0, 12.000001)
 scale = Vector2(18.240002, 2.44)
+collision_layer = 8
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackZone"]
+position = Vector2(0.054824557, -1.1065588)
+scale = Vector2(1, 1.0000001)
 shape = SubResource("RectangleShape2D_dqkch")
 
 [connection signal="child_order_changed" from="Hook/Catches" to="." method="_on_catches_child_order_changed" flags=3]
 [connection signal="body_entered" from="Hook/CatchRadius" to="." method="_on_catch_radius_body_entered"]
 [connection signal="child_order_changed" from="PlayerSprite/Collection" to="PlayerSprite/Collection" method="_on_child_order_changed" flags=3]
+[connection signal="area_entered" from="AttackZone" to="." method="_on_attack_zone_area_entered"]

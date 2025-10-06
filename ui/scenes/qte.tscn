@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4cc5v7or4g7l"]
+
+[ext_resource type="Script" uid="uid://cxr084wyvub50" path="res://scripts/repel_fish.gd" id="1_io06l"]
+
+[node name="QTE" type="Button"]
+process_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "AAAAA"
+script = ExtResource("1_io06l")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

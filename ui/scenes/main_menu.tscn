@@ -1,13 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://cdceaenvnjnfy"]
+[gd_scene load_steps=13 format=3 uid="uid://cdceaenvnjnfy"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_tfcyl"]
 [ext_resource type="Script" uid="uid://c5rj1cwd0cm8a" path="res://ui/scripts/main_menu.gd" id="2_pvlg3"]
+[ext_resource type="Texture2D" uid="uid://dxkb876ay0rg4" path="res://sprites/background_l0.png" id="3_bruso"]
+[ext_resource type="Texture2D" uid="uid://f4rbi77rumvk" path="res://sprites/background_l1.png" id="4_xh8ku"]
+[ext_resource type="Texture2D" uid="uid://cbegmqmkxpg07" path="res://sprites/background_l2.png" id="5_dvk87"]
+[ext_resource type="Texture2D" uid="uid://b8up1n8ldh4ec" path="res://sprites/background_l3.png" id="6_b0vah"]
+[ext_resource type="Texture2D" uid="uid://b5hrodasnexry" path="res://sprites/background_l4.png" id="7_2y4a0"]
+[ext_resource type="Shader" uid="uid://ddo3x8ewxmbcq" path="res://scenes/game.gdshader" id="8_xh8ku"]
+[ext_resource type="Texture2D" uid="uid://bi2q630c0kt8s" path="res://sprites/water.png" id="9_dvk87"]
 
-[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
-action = &"action"
+[sub_resource type="Gradient" id="Gradient_b0vah"]
+offsets = PackedFloat32Array(0.1618497, 0.82947975)
+colors = PackedColorArray(0.19607843, 0.23137255, 0.25882354, 1, 0.12156863, 0.1764706, 0.21176471, 1)
 
-[sub_resource type="Shortcut" id="Shortcut_h3oyo"]
-events = [SubResource("InputEventAction_pvlg3")]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kvuet"]
+gradient = SubResource("Gradient_b0vah")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2y4a0"]
+shader = ExtResource("8_xh8ku")
+shader_parameter/main_color = SubResource("GradientTexture2D_kvuet")
+shader_parameter/wave_color = Color(0.19607843, 0.23137255, 0.25882354, 1)
+shader_parameter/wave_size = 0.002000000095
+shader_parameter/wave_frequency = 0.022000001045
+shader_parameter/wave_speed = 1.0000000475
+shader_parameter/border_size = 0.0010000000475
+shader_parameter/edge_height = 0.9470000449825
+shader_parameter/border_color = Color(0.34901962, 0.36078432, 0.33333334, 1)
 
 [node name="MainMenu" type="Node2D"]
 
@@ -16,8 +36,14 @@ events = [SubResource("InputEventAction_pvlg3")]
 [node name="Menu" parent="CanvasLayer" instance=ExtResource("1_tfcyl")]
 script = ExtResource("2_pvlg3")
 
+[node name="Content" parent="CanvasLayer/Menu/Margin" index="0"]
+alignment = 2
+
 [node name="Title" parent="CanvasLayer/Menu/Margin/Content" index="0"]
-text = "Ludum Dare 58"
+theme_override_colors/font_shadow_color = Color(0.1328, 0.14821333, 0.16, 0.6117647)
+theme_override_constants/shadow_outline_size = 2
+theme_override_font_sizes/font_size = 10
+text = "Abyss Adrift"
 
 [node name="Actions" type="VBoxContainer" parent="CanvasLayer/Menu/Margin/Content" index="1"]
 layout_mode = 2
@@ -28,9 +54,39 @@ size_flags_vertical = 6
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-shortcut = SubResource("Shortcut_h3oyo")
 shortcut_in_tooltip = false
 text = "Play"
+
+[node name="Background" type="Node2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play"]
+z_index = -5
+position = Vector2(-139, 13)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+position = Vector2(165, -47)
+texture = ExtResource("3_bruso")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+position = Vector2(156, -37)
+texture = ExtResource("4_xh8ku")
+
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+position = Vector2(156, -37)
+texture = ExtResource("5_dvk87")
+
+[node name="Sprite2D4" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+position = Vector2(156, -37)
+texture = ExtResource("6_b0vah")
+
+[node name="Sprite2D5" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+position = Vector2(156, -37)
+texture = ExtResource("7_2y4a0")
+
+[node name="Water" type="Sprite2D" parent="CanvasLayer/Menu/Margin/Content/Actions/Play/Background"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_2y4a0")
+position = Vector2(180.99998, 690)
+scale = Vector2(2.3600001, 6.095)
+texture = ExtResource("9_dvk87")
 
 [connection signal="pressed" from="CanvasLayer/Menu/Margin/Content/Actions/Play" to="CanvasLayer/Menu" method="_on_play_pressed"]
 

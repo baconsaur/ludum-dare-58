@@ -1,12 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bi5m3408m8yxi"]
+[gd_scene load_steps=12 format=3 uid="uid://bi5m3408m8yxi"]
 
 [ext_resource type="Script" uid="uid://cvru4e4ocmvvv" path="res://scripts/fish_controller.gd" id="1_n6yr6"]
 [ext_resource type="Texture2D" uid="uid://dstft2ogyxgit" path="res://icon.svg" id="2_8g0i4"]
 [ext_resource type="Texture2D" uid="uid://o7momj7pbsur" path="res://sprites/fish.png" id="2_nub35"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8g0i4"]
-radius = 4.0
-height = 8.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nub35"]
+radius = 7.0
+height = 24.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8g0i4"]
 radius = 28.0
@@ -49,13 +49,28 @@ _data = {
 &"alert": SubResource("Animation_8g0i4")
 }
 
+[sub_resource type="Gradient" id="Gradient_nub35"]
+offsets = PackedFloat32Array(0.50731707, 0.9292683)
+colors = PackedColorArray(0.45, 0.45, 0.20699999, 0.2784314, 0.44705883, 0.44705883, 0.20392157, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pgks6"]
+gradient = SubResource("Gradient_nub35")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0.05)
+metadata/_snap_enabled = true
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pgks6"]
+height = 22.0
+
 [node name="Fish" type="CharacterBody2D" groups=["catchable", "fish"]]
-modulate = Color(0.29411766, 0.30588236, 0.30980393, 1)
 collision_layer = 3
 script = ExtResource("1_n6yr6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["catchable", "fish"]]
-shape = SubResource("CapsuleShape2D_8g0i4")
+position = Vector2(0, -1)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_nub35")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_nub35")
@@ -77,5 +92,17 @@ texture = ExtResource("2_8g0i4")
 libraries = {
 &"": SubResource("AnimationLibrary_pgks6")
 }
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+show_behind_parent = true
+texture = SubResource("GradientTexture2D_pgks6")
+
+[node name="SurfaceSensor" type="Area2D" parent="." groups=["catchable", "fish"]]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SurfaceSensor"]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_pgks6")
 
 [connection signal="body_entered" from="DetectionZone" to="." method="_on_detection_range_entered"]

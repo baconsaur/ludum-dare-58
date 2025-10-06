@@ -4,12 +4,14 @@ signal energy_change
 signal died
 signal day_end
 signal got_items
+signal danger
 
 enum State {
 	IDLE,
 	DESCENDING,
 	ASCENDING,
 	COOLDOWN,
+	HIT,
 }
 
 @export var ascend_speed: Vector2 = Vector2(25.0, -20.0)
@@ -23,8 +25,9 @@ enum State {
 @export var shake_cost: float = 3.0
 @export var y_change_cooldown: float = 1.0
 @export var item_height: int = 8
-@export var max_hook_range: float = 25.0
+@export var max_hook_range: float = 60.0
 @export var max_energy: float = 30.0
+@export var x_bounds: float = 50.0
 
 var energy: float = max_energy
 var state: State = State.IDLE
@@ -50,8 +53,6 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("action"):
 		take_action()
 		return
-	elif Input.is_action_just_pressed("down") and state == State.IDLE:
-		cast()
 	
 	if fish_on_hook or not can_change_y or energy <= 0:
 		return
@@ -91,6 +92,10 @@ func move_player(delta):
 	if state == State.IDLE:
 		var x_direction = Input.get_axis("left", "right")
 		if x_direction:
+			if x_direction < 0 and position.x <= player_spawn.x - x_bounds - 32:
+				return
+			elif x_direction > 0 and position.x >= player_spawn.x + x_bounds:
+				return
 			position.x += x_direction * player_speed * delta
 			hook.global_position.x = global_position.x
 	elif abs(sprite.global_position.x - hook.global_position.x) > 0:
@@ -105,6 +110,8 @@ func take_action():
 		return
 	elif fish_on_hook:
 		shake()
+	elif state == State.IDLE:
+		cast()
 
 func cast():
 	if state != State.IDLE or energy <= 0:
@@ -150,7 +157,10 @@ func move_hook(delta):
 	
 	if hook.position.y <= hook_origin.y: 
 		catch()
-	elif hook.position.y >= max_depth:
+	elif hook.position.y >= hook_origin.y + max_depth:
+		print_debug(hook.position.y)
+		print_debug(max_depth)
+		print_debug(hook_origin.y + max_depth)
 		animation_player.play("max_depth")
 		reel()
 	elif state == State.ASCENDING and hook.velocity.y <= 0.01:
@@ -196,6 +206,9 @@ func drop_item(item):
 	if item not in catches.get_children():
 		return
 	item.drop()
+
+func throw(target: Node2D):
+	pass
 
 func reel():
 	if state != State.DESCENDING:
@@ -254,30 +267,52 @@ func delay_y_change():
 func process_catches():
 	cooldown(0.25 * (catches.get_child_count() + 1), State.IDLE)
 	
+	var hit = false
 	var new_item_count = 0
 	for item in catches.get_children():
 		if item.is_in_group("fish"):
-			var collection_size = collection.get_child_count()
-			if collection_size:
-				# TODO base lost item count on fish size?
-				var index = randi_range(0, collection_size - 1)
-				var taken_item = collection.get_child(index)
-				taken_item.remove()
-			else:
-				emit_signal("died")
 			item.queue_free()
+			if hit:
+				continue
+			hit = true
+			set_state(State.HIT)
 		else:
 			item.collect()
 			catches.remove_child(item)
 			collection.add_child(item)
 			new_item_count += 1
 	
+	if hit:
+		take_hit()
+	
 	emit_signal("got_items", new_item_count)
 
-	if energy <= 0:
+	if energy <= 0 and not (hit and collection.get_child_count() == 0):
 		var catch_value = get_catch_value()
 
 		emit_signal("day_end", catch_value)
+
+func take_hit():
+	var collection_size = collection.get_child_count()
+	if not collection_size:
+		emit_signal("died", "You were eaten by a mutant fish.")
+		return
+
+	for item in collection.get_children():
+		item.remove()
+
+	animation_player.play("hit")
+	animation_player.connect("animation_finished", func(_x): set_state(State.IDLE), CONNECT_ONE_SHOT)
+
+func remove_item() -> bool:
+	var collection_size = collection.get_child_count()
+	if not collection_size:
+		return false
+
+	var index = randi_range(0, collection_size - 1)
+	var taken_item = collection.get_child(index)
+	taken_item.remove()
+	return true
 
 func get_catch_value() -> int:
 	var catch_value: int = 0
@@ -291,9 +326,27 @@ func set_state(new_state):
 	state = new_state
 
 func _on_catch_radius_body_entered(body: Node2D) -> void:
+	if state == State.IDLE:
+		return
+		
 	if body.is_in_group("catchable") and body.can_catch:
 		hook_item(body)
 
 func _on_catches_child_order_changed() -> void:
 	for item in catches.get_children():
 		item.global_position.y = catches.global_position.y + (item.get_index() * item_height)
+
+func _on_attack_zone_area_entered(area: Area2D) -> void:
+	print_debug(area)
+	if not area.is_in_group("fish"):
+		return
+	
+	var fish = area.get_parent()
+	
+	if fish.is_alert():
+		fish.retreat()
+	elif fish.is_hooked():
+		if not collection.get_child_count():
+			fish.attack()
+			return
+		emit_signal("danger", fish)

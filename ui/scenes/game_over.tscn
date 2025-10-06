@@ -1,14 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://kuk7qphqfskm"]
+[gd_scene load_steps=4 format=3 uid="uid://kuk7qphqfskm"]
 
 [ext_resource type="PackedScene" uid="uid://csjjjbo38bicy" path="res://ui/scenes/menu.tscn" id="1_n226a"]
 [ext_resource type="Script" uid="uid://ge7pxpy26qyx" path="res://ui/scripts/game_over.gd" id="2_1cqk3"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="3_rgl77"]
-
-[sub_resource type="InputEventAction" id="InputEventAction_pvlg3"]
-action = &"action"
-
-[sub_resource type="Shortcut" id="Shortcut_rgl77"]
-events = [SubResource("InputEventAction_pvlg3")]
 
 [node name="GameOver" instance=ExtResource("1_n226a")]
 script = ExtResource("2_1cqk3")
@@ -27,7 +21,9 @@ theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
 [node name="Panel" type="Panel" parent="MarginContainer" index="0"]
+custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
+size_flags_vertical = 4
 
 [node name="Margin" parent="." index="1"]
 theme_override_constants/margin_left = 4
@@ -58,7 +54,6 @@ size_flags_vertical = 10
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-shortcut = SubResource("Shortcut_rgl77")
 shortcut_in_tooltip = false
 text = "Retry"
 

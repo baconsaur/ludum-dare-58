@@ -7,6 +7,7 @@ enum State {
 	IDLE,
 	ALERT,
 	HOOKED,
+	ATTACK,
 }
 
 @export var idle_speed: float = 15.0
@@ -14,8 +15,9 @@ enum State {
 @export var patrol_range: float = 50.0
 @export var max_alert_distance: float = 50.0
 @export var max_stamina: int = 3
-@export var drop_offset: Vector2 = Vector2(0, 10.0)
+@export var drop_offset: Vector2 = Vector2(0, 25.0)
 @export var max_alert_time: float = 3.0
+@export var max_height: float = 25.0
 
 var state: State = State.IDLE
 var origin: Vector2 = Vector2.ZERO
@@ -35,6 +37,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	move(delta)
+	if velocity.x < 0:
+		sprite.flip_h = false
+	elif velocity.x > 0:
+		sprite.flip_h = true
 
 func move(delta):
 	if state == State.ALERT:
@@ -46,10 +52,8 @@ func move(delta):
 	
 	if position.x > origin.x + patrol_range:
 		x_direction = -1
-		sprite.flip_h = false
 	elif position.x < origin.x - patrol_range:
 		x_direction = 1
-		sprite.flip_h = true
 
 	velocity.x = x_direction * idle_speed
 	var collided = move_and_slide()
@@ -71,7 +75,11 @@ func pursue(delta):
 	move_and_slide()
 
 func alert():
-	if state != State.IDLE or not target:
+	if state != State.IDLE:
+		return
+	
+	if not target:
+		set_state(State.IDLE)
 		return
 	
 	animation_player.play("alert")
@@ -97,6 +105,11 @@ func hook(catch_zone):
 		return
 	
 	set_state(State.HOOKED)
+
+func retreat():
+	target = null
+	global_position += drop_offset
+	set_state(State.IDLE)
 
 func shake():
 	stamina -= 1
@@ -126,13 +139,20 @@ func drop():
 	can_catch = true
 
 func collect():
-	modulate = Color.WHITE
+	print_debug("oh no")
 
 func attack():
-	pass
+	set_state(State.ATTACK)
 
 func defeat():
-	pass
+	print_debug("yay")
+	queue_free()
+
+func is_alert():
+	return state == State.ALERT
+
+func is_hooked():
+	return state == State.HOOKED
 
 func set_state(new_state):
 	# TODO exit/enter

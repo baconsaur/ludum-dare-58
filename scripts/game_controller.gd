@@ -2,23 +2,27 @@ extends Node2D
 
 @export var room_cost: int = 15
 @export var food_cost: int = 5
-@export var level_scene: PackedScene
+@export var level_scenes: Array[PackedScene]
+@export var qte_scene: PackedScene
+@export var qte_time: float = 0.8
 
 var day: int = 1
 var balance: int = 0
 var meals_skipped: int = 0
 var current_level: Node2D
 var items_left: int = 0
+var level: int = 0
 
 @onready var player = $Player
 @onready var hud = $HUD
 @onready var energy_bar = $HUD/MarginContainer/EnergyBar
+@onready var hud_container = $HUD/MarginContainer
 @onready var game_over_modal = $HUD/GameOver
 @onready var level_end_modal = $HUD/LevelEnd
 @onready var intro_modal = $HUD/Intro
 
 func _ready() -> void:
-	load_level(level_scene)
+	load_level(level_scenes[0])
 	
 	get_tree().paused = true
 	intro_modal.visible = true
@@ -30,6 +34,7 @@ func _ready() -> void:
 	player.connect("died", game_over)
 	player.connect("day_end", level_complete)
 	player.connect("got_items", update_items_left)
+	#player.connect("danger", repel_fish)
 	
 	energy_bar.max_value = player.max_energy
 
@@ -46,6 +51,13 @@ func load_level(level):
 	
 	items_left = current_level.find_children("Item*").size()
 
+#func repel_fish(fish):
+	#var qte = qte_scene.instantiate()
+	#hud_container.add_child(qte)
+	#qte.init_timer(qte_time)
+	#qte.connect("success", player.throw.bind(fish))
+	#qte.connect("fail", fish.attack)
+
 func update_items_left(change):
 	items_left -= change
 	
@@ -55,7 +67,7 @@ func update_items_left(change):
 func update_energy(energy):
 	energy_bar.value = energy
 
-func game_over(reason):
+func game_over(reason="Skill issue"):
 	get_tree().paused = true
 	
 	game_over_modal.set_content(
@@ -63,10 +75,15 @@ func game_over(reason):
 		+ str(day) + "[/color] " + ("day" if day == 1 else "days")
 	)
 	game_over_modal.visible = true
+	level_end_modal.visible = false
 
 func level_complete(catch_value):
 	var actual_food_cost = food_cost
 	var comment = "You feel rested and recharged in the morning."
+	player.max_energy += 10
+	if not day % 2:
+		comment += "[br]You got a longer fishing line."
+		player.max_depth += 50
 	
 	if balance + catch_value < room_cost:
 		game_over("You couldn't afford a room. You were eaten by a mutant.")
@@ -100,4 +117,8 @@ func level_complete(catch_value):
 	get_tree().paused = true
 	level_end_modal.visible = true
 
-	load_level(level_scene)
+	if level + 1 < level_scenes.size():
+		level += 1
+	else:
+		level = 1
+	load_level(level_scenes[level])

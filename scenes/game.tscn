@@ -1,15 +1,17 @@
-[gd_scene load_steps=21 format=3 uid="uid://5bs3j6op03mu"]
+[gd_scene load_steps=24 format=3 uid="uid://5bs3j6op03mu"]
 
 [ext_resource type="Script" uid="uid://comuclmxm6gu7" path="res://scripts/game_controller.gd" id="1_u5sy4"]
 [ext_resource type="Script" uid="uid://c4dkm3sxlixjh" path="res://ui/scripts/hud.gd" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://caib5tm8yfjfb" path="res://scenes/level2.tscn" id="2_264po"]
 [ext_resource type="PackedScene" uid="uid://dgugr3b708uqa" path="res://ui/scenes/pause.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c544vis4otiqx" path="res://scenes/player.tscn" id="3_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://cksvklsdlfmy6" path="res://scenes/level3.tscn" id="4_5newe"]
 [ext_resource type="Theme" uid="uid://oebmwspom6mx" path="res://ui/default_theme.tres" id="5_gee14"]
 [ext_resource type="PackedScene" uid="uid://kuk7qphqfskm" path="res://ui/scenes/game_over.tscn" id="6_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://b4cc5v7or4g7l" path="res://ui/scenes/qte.tscn" id="7_ssvqc"]
 [ext_resource type="PackedScene" uid="uid://bfqpgl37gw4yb" path="res://ui/scenes/level_end.tscn" id="7_vtaks"]
 [ext_resource type="PackedScene" uid="uid://dyd2tfbxude33" path="res://ui/scenes/intro.tscn" id="8_vtaks"]
 [ext_resource type="PackedScene" uid="uid://bd06xgg3yj88s" path="res://scenes/level.tscn" id="9_0tnpc"]
-[ext_resource type="Texture2D" uid="uid://c4xv8w6tljdls" path="res://sprites/background2.png" id="10_dinhu"]
 [ext_resource type="Shader" uid="uid://ddo3x8ewxmbcq" path="res://scenes/game.gdshader" id="11_dinhu"]
 [ext_resource type="Texture2D" uid="uid://bi2q630c0kt8s" path="res://sprites/water.png" id="11_kvpfn"]
 [ext_resource type="Texture2D" uid="uid://dxkb876ay0rg4" path="res://sprites/background_l0.png" id="13_kvuet"]
@@ -17,32 +19,35 @@
 [ext_resource type="Texture2D" uid="uid://cbegmqmkxpg07" path="res://sprites/background_l2.png" id="15_ir15t"]
 [ext_resource type="Texture2D" uid="uid://b8up1n8ldh4ec" path="res://sprites/background_l3.png" id="16_ca42v"]
 [ext_resource type="Texture2D" uid="uid://b5hrodasnexry" path="res://sprites/background_l4.png" id="17_rysoc"]
+[ext_resource type="AudioStream" uid="uid://30ewqjw08eqw" path="res://sound/bgm.mp3" id="19_264po"]
 
 [sub_resource type="Gradient" id="Gradient_dinhu"]
 offsets = PackedFloat32Array(0.1618497, 0.82947975)
 colors = PackedColorArray(0.19607843, 0.23137255, 0.25882354, 1, 0.12156863, 0.1764706, 0.21176471, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_kvuet"]
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5newe"]
 gradient = SubResource("Gradient_dinhu")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kvuet"]
 shader = ExtResource("11_dinhu")
-shader_parameter/main_color = SubResource("GradientTexture2D_kvuet")
+shader_parameter/main_color = SubResource("GradientTexture2D_5newe")
 shader_parameter/wave_color = Color(0.19607843, 0.23137255, 0.25882354, 1)
-shader_parameter/wave_size = 0.0010000000475
-shader_parameter/wave_frequency = 0.026000001235
-shader_parameter/wave_speed = 1.4000000665
+shader_parameter/wave_size = 0.002000000095
+shader_parameter/wave_frequency = 0.022000001045
+shader_parameter/wave_speed = 1.0000000475
 shader_parameter/border_size = 0.0010000000475
-shader_parameter/edge_height = 0.95200004522
+shader_parameter/edge_height = 0.9470000449825
 shader_parameter/border_color = Color(0.34901962, 0.36078432, 0.33333334, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u5sy4")
-level_scene = ExtResource("9_0tnpc")
+level_scenes = Array[PackedScene]([ExtResource("9_0tnpc"), ExtResource("4_5newe"), ExtResource("2_264po")])
+qte_scene = ExtResource("7_ssvqc")
 
 [node name="Player" parent="." instance=ExtResource("3_lnu2h")]
 position = Vector2(156, 34)
+max_depth = 200
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("1_uwrxv")
@@ -59,75 +64,93 @@ theme = ExtResource("5_gee14")
 [node name="EnergyBar" type="ProgressBar" parent="HUD/MarginContainer"]
 modulate = Color(1, 1, 1, 0.7764706)
 layout_mode = 2
+size_flags_vertical = 8
 value = 100.0
 rounded = true
 show_percentage = false
+
+[node name="Label" type="Label" parent="HUD/MarginContainer"]
+modulate = Color(1, 1, 1, 0.654902)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+text = "Energy"
 
 [node name="GameOver" parent="HUD" instance=ExtResource("6_0tnpc")]
 visible = false
 
 [node name="LevelEnd" parent="HUD" instance=ExtResource("7_vtaks")]
 visible = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Intro" parent="HUD" instance=ExtResource("8_vtaks")]
 visible = false
 
-[node name="Water" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_kvuet")
-position = Vector2(159, 702.00006)
-scale = Vector2(1, 6.095)
-texture = ExtResource("11_kvpfn")
-
-[node name="Background" type="Node2D" parent="."]
-z_index = -5
-position = Vector2(-69, 58)
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -2
+follow_viewport_enabled = true
 
 [node name="Parallax2D" type="Parallax2D" parent="Background"]
-scroll_scale = Vector2(0, 0)
-scroll_offset = Vector2(0, -7)
+scroll_scale = Vector2(0, 1)
+scroll_offset = Vector2(85, -13)
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D"]
-position = Vector2(156, -37)
+z_index = -10
 texture = ExtResource("13_kvuet")
 
-[node name="Parallax2D2" type="Parallax2D" parent="Background"]
+[node name="Parallax2D6" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.05, 1)
+scroll_offset = Vector2(-1, 32.4)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D2"]
+[node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D6"]
+z_index = -10
 position = Vector2(156, -37)
 texture = ExtResource("14_trtic")
 
 [node name="Parallax2D3" type="Parallax2D" parent="Background"]
 scroll_scale = Vector2(0.15, 1)
+scroll_offset = Vector2(-46.585, 42.5)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D3"]
+z_index = -10
 position = Vector2(156, -37)
 texture = ExtResource("15_ir15t")
 
 [node name="Parallax2D4" type="Parallax2D" parent="Background"]
-scroll_scale = Vector2(0.2, 1)
+scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(-1, 55)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D4"]
+z_index = -10
 position = Vector2(156, -37)
 texture = ExtResource("16_ca42v")
 
 [node name="Parallax2D5" type="Parallax2D" parent="Background"]
-scroll_scale = Vector2(0.4, 1)
+scroll_scale = Vector2(0.3, 1)
+scroll_offset = Vector2(-1, 55)
 repeat_size = Vector2(250, 0)
 repeat_times = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D5"]
+z_index = -10
 position = Vector2(156, -37)
 texture = ExtResource("17_rysoc")
 
-[node name="Ruins" type="Sprite2D" parent="Background"]
-visible = false
-position = Vector2(156, 63)
-texture = ExtResource("10_dinhu")
+[node name="Water" type="Sprite2D" parent="Background"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_kvuet")
+position = Vector2(159, 702.00006)
+scale = Vector2(2.3600001, 6.095)
+texture = ExtResource("11_kvpfn")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("19_264po")
+autoplay = true
+bus = &"Music"
